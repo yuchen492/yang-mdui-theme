@@ -95,6 +95,7 @@
 
 
 {include file="includes/paymodal"}
+{include file="yangcuts/pay_dialog"}
 
 <script type="text/javascript" src="/themes/clientarea/default/assets/libs/qrcode/jquery.qrcode.min.js?v={$Ver}"></script>
 <script src="/themes/clientarea/default/assets/libs/dropzone/min/dropzone.min.js?v={$Ver}"></script>
@@ -105,4 +106,4 @@
 			min = '{$Addfunds.addfunds.addfunds_minimum}'
 		,_url = '';
 </script>
-<script src="/themes/clientarea/default/assets/js/addfunds.js?v={$Ver}"></script>
+<script src="/themes/clientarea/yang-mdui-re/yangjs/addfunds.js?v={$Ver}"></script>
