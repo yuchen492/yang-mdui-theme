@@ -86,7 +86,7 @@
                 </div>
                 
                 <div class="mdui-card-actions">
-                    <button type="button"  class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme pay-now-btn" onclick="formSubmitBtn();return false;">充值</button>
+                    <button type="button" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme pay-now-btn" onclick="formSubmitBtn();return false;">充值</button>
 				</div>
                 
             </div>
@@ -100,10 +100,113 @@
 <script type="text/javascript" src="/themes/clientarea/default/assets/libs/qrcode/jquery.qrcode.min.js?v={$Ver}"></script>
 <script src="/themes/clientarea/default/assets/libs/dropzone/min/dropzone.min.js?v={$Ver}"></script>
 <script type="text/javascript">
-
 	var intervalBox;
 	var max = '{$Addfunds.addfunds.addfunds_maximum}',
 			min = '{$Addfunds.addfunds.addfunds_minimum}'
 		,_url = '';
+
+function formSubmitBtn () {
+    var amount = $('input[name=amount]').val();
+    var payment = $('input[name=payment]:checked').val();
+
+    if (!amount || isNaN(amount) || Number(amount) <= 0) {
+        alert('请输入有效的充值金额');
+        return false;
+    }
+
+    if (!payment) {
+        alert('请选择支付方式');
+        return false;
+    }
+
+    var $btn = $('.pay-now-btn');
+    var originalHtml = $btn.html();
+    $btn.text('处理中...').prop('disabled', true);
+
+    function resetBtn() {
+        $btn.html(originalHtml).prop('disabled', false);
+    }
+
+    var requestUrl = (typeof _url !== 'undefined' ? _url : '') + '/pay?action=recharge';
+
+    $.ajax({
+        url: requestUrl,
+        data: { beforeCheck: 1, amount: amount, payment: payment },
+        type: 'post',
+        timeout: 15000,
+        success: function (e) {
+            resetBtn();
+
+            if (e && (e.status == 400 || e.status == 406)) {
+                var errMsg = e.msg || '充值请求失败，请稍后重试';
+                alert(errMsg);
+                return false;
+            }
+
+            if (typeof e === 'object' && e.status && e.status != 200) {
+                var msg = e.msg || '充值请求异常';
+                alert(msg);
+                return false;
+            }
+
+            // 1. 优先使用主题原生 MDUI 对话框
+            if ($('#yangPayDialog').length && typeof mdui !== 'undefined') {
+                var payContent = (typeof e === 'object') ? JSON.stringify(e) : e;
+                $('#yangPayDialogContent').html(payContent);
+                var payDialog = new mdui.Dialog('#yangPayDialog');
+                payDialog.open();
+                return;
+            }
+
+            // 2. 兼容 Bootstrap / default modal
+            if ($('#myModal').length && typeof $('#myModal').modal === 'function') {
+                $("#pay .modal-body").html(e);
+                $('#myModal').modal('show');
+                return;
+            }
+
+            // 3. 兜底直接注入展示
+            if ($('#pay .modal-body').length) {
+                $("#pay .modal-body").html(e);
+                $('#pay').show();
+                $('#myModal').show();
+                return;
+            }
+
+            alert('订单已生成，请前往账单列表完成支付');
+            location.href = '/billing';
+        },
+        error: function (xhr, status, error) {
+            resetBtn();
+            var tip = '请求失败或支付网关异常（状态码：' + (xhr.status || status) + '）';
+            if (status === 'timeout') {
+                tip = '充值请求超时，请检查网络';
+            }
+            alert(tip);
+        }
+    });
+}
+
+function checkOrder (invoiceid) {
+    $.ajax({
+        url: 'check_order',
+        type: 'POST',
+        data: { id: invoiceid },
+        dataType: 'json',
+        success: function (result) {
+            if (result.status == '200') {
+                location.reload();
+            }
+        }
+    });
+}
+
+function addfundsMaxMin () {
+    if (typeof min !== 'undefined' && min !== '' && Number($('#addfundsInp').val()) < Number(min)) {
+        $('#addfundsInp').val(min);
+    }
+    if (typeof max !== 'undefined' && max !== '' && Number($('#addfundsInp').val()) > Number(max)) {
+        $('#addfundsInp').val(max);
+    }
+}
 </script>
-<script src="/themes/clientarea/yang-mdui-re/yangjs/addfunds.js?v={$Ver}"></script>
