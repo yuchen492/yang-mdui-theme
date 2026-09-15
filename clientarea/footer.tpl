@@ -82,14 +82,86 @@
 </style>
 {/if}
 
-<script src="/themes/clientarea/yang-mdui-re/yangjs/sidebar.js"></script>
+<script id="yangmdui-local-sidebar">
+// 氧MDUI侧边栏记忆工具
+var sidebarStatus = getCookie('yangMduiSidebar');
+var yangMduiSidebarInst = new mdui.Drawer('#left-drawer');
+if (sidebarStatus){
+    if (sidebarStatus == 1) {
+        yangMduiSidebarInst.open();
+    } else {
+        yangMduiSidebarInst.close();
+    }
+} else {
+    setCookie('yangMduiSidebar',0,60);
+    yangMduiSidebarInst.close();
+}
+mdui.$('#left-drawer').on('open.mdui.drawer', function () {
+    setCookie('yangMduiSidebar',1,60);
+});
+mdui.$('#left-drawer').on('close.mdui.drawer', function () {
+    setCookie('yangMduiSidebar',0,60);
+});
+</script>
 {if $CustomDepot.yangmdui_enable_darkview == "true"}
-<script src="/themes/clientarea/yang-mdui-re/yangjs/darkview.js"></script>
+<script id="yangmdui-local-darkview">
+// 氧MDUI深色模式操作方法
+var darkviewStatus = getCookie('yangMduiDark');
+if (darkviewStatus){
+    if (darkviewStatus == 1) {
+        $(document.body).addClass('mdui-theme-layout-dark')
+    } 
+} else {
+    setCookie('darkviewStatus',0,60);
+}
+function darkviewSwitch() {
+    var darkviewStatus = getCookie('yangMduiDark');
+    if (darkviewStatus == 1) {
+        $(document.body).removeClass('mdui-theme-layout-dark')
+        setCookie('yangMduiDark',0,60);
+    } else {
+        $(document.body).addClass('mdui-theme-layout-dark')
+        setCookie('yangMduiDark',1,60);
+    }
+}
+</script>
 {/if}
 
 {if $TplName != 'configureproduct' }
     {if $CustomDepot.yangmdui_bootstrap_support == "true"}
-    <script src="/themes/clientarea/yang-mdui-re/yangjs/bssupport.js"></script>
+    <script id="yangmdui-local-bssupport">
+// 氧MDUI的Bootstrap前端转化
+function yangmdui_bst(){
+    //按钮
+    $(".btn").addClass("mdui-btn");
+    $(".btn").removeClass("btn");
+    $(".btn-primary").addClass("mdui-btn-raised");
+    $(".btn-primary").addClass("mdui-color-theme");
+    $(".btn-primary").removeClass("btn-primary");
+    //卡片
+    $(".card").addClass("mdui-card");
+    $(".card").removeClass("card");
+    $(".card-body").addClass("mdui-card-content");
+    $(".card-body").removeClass("card-body");
+    //内置分页
+    $(".page-link").addClass("mdui-btn");
+    $(".page-link").addClass("mdui-btn-icon");
+    $(".page-link").addClass("mdui-btn-dense");
+    $(".page-item.active > a").addClass("mdui-color-theme");
+    $(".page-item.disabled > a").attr("disabled","true");
+    $(".page-item").removeClass("page-item");
+    $("select").addClass("mdui-select");
+    //表格
+    $("table").parent().addClass("mdui-table-fluid");
+    $(".mdui-table-fluid").removeClass("table-responsive");
+    $(".thead-light").removeClass("thead-light");
+    $("table").addClass("mdui-table");
+    $(".table").removeClass("table");
+    //通用深色支持
+    $(".bg-light").removeClass("bg-light");
+    $(".text-dark").removeClass("text-dark");
+}
+</script>
     <script>
     yangmdui_bst()
     </script>
