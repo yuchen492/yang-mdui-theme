@@ -83,6 +83,7 @@
 {/if}
 
 <script id="yangmdui-local-sidebar">
+{literal}
 // 氧MDUI侧边栏记忆工具
 var sidebarStatus = getCookie('yangMduiSidebar');
 var yangMduiSidebarInst = new mdui.Drawer('#left-drawer');
@@ -102,9 +103,11 @@ mdui.$('#left-drawer').on('open.mdui.drawer', function () {
 mdui.$('#left-drawer').on('close.mdui.drawer', function () {
     setCookie('yangMduiSidebar',0,60);
 });
+{/literal}
 </script>
 {if $CustomDepot.yangmdui_enable_darkview == "true"}
 <script id="yangmdui-local-darkview">
+{literal}
 // 氧MDUI深色模式操作方法
 var darkviewStatus = getCookie('yangMduiDark');
 if (darkviewStatus){
@@ -124,12 +127,14 @@ function darkviewSwitch() {
         setCookie('yangMduiDark',1,60);
     }
 }
+{/literal}
 </script>
 {/if}
 
 {if $TplName != 'configureproduct' }
     {if $CustomDepot.yangmdui_bootstrap_support == "true"}
     <script id="yangmdui-local-bssupport">
+{literal}
 // 氧MDUI的Bootstrap前端转化
 function yangmdui_bst(){
     //按钮
@@ -161,6 +166,7 @@ function yangmdui_bst(){
     $(".bg-light").removeClass("bg-light");
     $(".text-dark").removeClass("text-dark");
 }
+{/literal}
 </script>
     <script>
     yangmdui_bst()
