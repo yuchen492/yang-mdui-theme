@@ -1,0 +1,255 @@
+/**
+ * security-page.css
+ * 安全中心独立外链样式表 (MDUI风格白色全宽卡片)
+ * 适配 yang-mdui-re 个人中心 details.tpl 规范
+ */
+
+/* 页面卡片标题：遵循需求统一 20px */
+.security-page-card .mdui-card-primary-title {
+    font-size: 20px !important;
+    line-height: 28px !important;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+/* 白色方角卡片（与details.tpl原生mdui-card一致，微调直角/方角与柔和阴影） */
+.security-page-card {
+    background-color: #ffffff !important;
+    border-radius: 2px !important;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2) !important;
+    border: none !important;
+    transition: box-shadow .25s cubic-bezier(.4,0,.2,1);
+}
+
+.security-page-card:hover {
+    box-shadow: 0 4px 5px -2px rgba(0,0,0,.2), 0 7px 10px 1px rgba(0,0,0,.14), 0 2px 16px 1px rgba(0,0,0,.12) !important;
+}
+
+/* 顶端用户信息卡片布局 */
+.security-header-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.security-avatar-box {
+    flex-shrink: 0;
+}
+
+.security-user-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: #3f51b5;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.security-main-info {
+    flex: 1 1 280px;
+    min-width: 240px;
+}
+
+.security-username-row {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.security-strength-bar {
+    max-width: 320px;
+    margin-top: 6px;
+}
+
+.security-strength-label {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 6px;
+}
+
+.security-strength-label .security-text {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.87);
+    margin-left: 4px;
+}
+
+.security-strength-progress {
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e0e0e0;
+    overflow: hidden;
+}
+
+.security-strength-progress .progress-bar {
+    height: 100%;
+    border-radius: 4px;
+    background-color: #4caf50;
+    transition: width 0.6s ease;
+}
+
+.security-meta-list {
+    flex: 1 1 320px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.7);
+    line-height: 1.8;
+}
+
+.security-meta-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.security-meta-list li {
+    margin-bottom: 6px;
+}
+
+.security-meta-list label {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.54);
+    margin-bottom: 0;
+}
+
+/* 功能卡片内部通用 Flex 布局 */
+.security-card-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.security-card-desc-box {
+    flex: 1 1 300px;
+}
+
+.security-card-desc {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.security-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: #4caf50;
+    margin-left: 10px;
+    font-weight: normal;
+}
+
+.security-status-badge .phonehide {
+    color: rgba(0, 0, 0, 0.6);
+    margin-right: 4px;
+}
+
+.security-card-action-box {
+    flex-shrink: 0;
+}
+
+/* 第三方绑定卡片网格列表 */
+.security-oauth-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.security-oauth-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 2px;
+    background-color: #fafafa;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.security-oauth-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.security-oauth-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.security-oauth-icon img,
+.security-oauth-icon svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.security-oauth-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.security-oauth-desc {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+/* 按钮样式微调：支持原生 MDUI 与 Bootstrap 按钮在安全中心内平滑呈现 */
+.security-card-action-box .btn,
+.security-oauth-item .btn {
+    min-width: 96px;
+    font-weight: 500;
+    border-radius: 2px;
+}
+
+/* 响应式适配 */
+@media (max-width: 767px) {
+    .security-header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .security-main-info,
+    .security-meta-list {
+        flex: 0 1 auto;
+        min-width: 0;
+        width: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    .security-card-desc-box {
+        flex: 0 1 auto;
+        min-width: 0;
+        width: 100%;
+    }
+    
+    .security-card-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    
+    .security-card-action-box {
+        width: 100%;
+        text-align: right;
+    }
+}
